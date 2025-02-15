@@ -1,10 +1,17 @@
 #!/bin/bash
-alias jq=$(source ./build/requires.sh )
-shopt -s expand_aliases
+location=$(source ./build/requires.sh )
+#example npm run test -- production
 
-#exmaple npm run build-all -- --configuration=production
-echo "Build Type: $1"
-for PROJ in $(cat angular.json | jq -r '.projects | keys[]');
+configuration=$1
+if [ -z "$configuration"] 
+then
+  configuration=development
+fi
+
+echo "Build Type: $configuration"
+for dir in $location; 
 do 
-    npm run build $PROJ --configuration=$1;
+    npx ng build $(basename "$dir") --configuration=$configuration;
 done
+
+npx ng build --configuration=$1;

@@ -1,12 +1,32 @@
-alias jq=$(source ./build/requires.sh )
-shopt -s expand_aliases
+#!/bin/bash
 
-#example npm run test-all -- false true ChromeHeadless
-echo "Watch: $1"
-echo "Coverage: $2"
-echo "Browser: $3"
+location=$(source ./build/requires.sh )
+#example npm run test -- false true ChromeHeadless
+watch=$1
+if [ -z "$watch"] 
+then
+  watch=false
+fi
 
-for PROJ in $(cat angular.json | jq -r '.projects | keys[]'); 
+coverage=$2
+if [ -z "$coverage"] 
+then
+  coverage=false
+fi
+
+browser=$3
+if [ -z "$browser"] 
+then
+  browser="ChromeHeadless"
+fi
+
+echo "Watch: $watch"
+echo "Coverage: $coverage"
+echo "Browser: $browser"
+
+for dir in $location; 
 do 
-    npm run test $PROJ --watch=$1 --code-coverage=$2 --browsers=$3; 
+    npx ng test $(basename "$dir") --watch=$watch --code-coverage=$coverage --browsers=$browser;
 done
+
+npx ng test --watch=$watch --code-coverage=$coverage --browsers=$browser;

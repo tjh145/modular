@@ -4,11 +4,9 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build",
-    "build:all": "bash ./build/build.sh $1",
+    "build": "bash ./build/build.sh $1",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test --watch=false --code-coverage ",
-    "test:all": "bash ./build/test.sh $1 $2 $3"
+    "test": "bash ./build/test.sh $1 $2 $3"
   },
   "private": true,
   "dependencies": {
